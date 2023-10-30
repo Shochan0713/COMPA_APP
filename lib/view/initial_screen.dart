@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:compa_app/view/conversation_content_creating_screen.dart';
-import 'package:compa_app/widget/back_ground_image.dart';
+import 'package:compa_app/view/selected_screen.dart';
+import 'package:compa_app/widget/back_ground_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class InitialScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class _InitialScreenState extends State<InitialScreen> {
     Timer(Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => ConversionContentCreatingScreen(),
+          builder: (context) => SelectScreen(),
         ),
       );
     });
