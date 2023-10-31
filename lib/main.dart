@@ -10,6 +10,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: InitialScreen());
+    return MaterialApp(
+      home: InitialScreen(),
+      theme: ThemeData(fontFamily: 'Dela Gothic One'),
+    );
   }
 }

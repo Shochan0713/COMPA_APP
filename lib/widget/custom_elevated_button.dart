@@ -14,7 +14,7 @@ class CustomElevatedButton extends StatelessWidget {
         primary: Colors.grey[300],
         onPrimary: Colors.purple,
       ),
-      onPressed: () {},
+      onPressed: onPressed,
     );
   }
 }

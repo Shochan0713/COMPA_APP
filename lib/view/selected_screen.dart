@@ -23,23 +23,20 @@ class _SelectScreenState extends State<SelectScreen> {
                 child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // 画面遷移がされない
+            // contextらへんが怪しい気がする
             CustomElevatedButton(
                 text: 'コミュニケーション',
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const ConversionContentCreatingScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          const ConversionContentCreatingScreen()));
                 }),
             CustomElevatedButton(
                 text: '席替え',
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const SettingScreenChangeSeat()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const SettingScreenChangeSeat()));
                 })
           ],
         ))),
