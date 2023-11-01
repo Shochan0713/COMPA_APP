@@ -1,4 +1,7 @@
+import 'package:compa_app/helper/enum.dart';
 import 'package:compa_app/widget/back_ground_image_widget.dart';
+import 'package:compa_app/widget/common_radio_button.dart';
+import 'package:compa_app/widget/drop_down_button.dart';
 import 'package:compa_app/widget/transparent_border_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -24,14 +27,38 @@ class _ConversionContentCreatingScreenState
             Align(
               alignment: Alignment.center,
               child: Text(
-                '選択肢',
+                '質問を選んでね！！',
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            Row()
-            //ドロップダウン1＜質問内容＞
-            //ラジオボタン＜ランダムか順番か＞
-            //質問数の選択
+            CommonDropButton<QuestionContent>(
+              initialValue: QuestionContent.private,
+              onChanged: (value) {
+                print('Selected QuestionContent: $value');
+              },
+              items: {
+                QuestionContent.private: "私生活の質問",
+                QuestionContent.work: "仕事の質問",
+              },
+            ),
+            Row(),
+            CommonRadioButton<OutputOrder>(
+              selectedValue: OutputOrder.random,
+              onValueChanged: (value) {
+                print('Selected OutputOrder: $value');
+              },
+              items: OutputOrder.values,
+              itemBuilder: (value) {
+                return Text(outputOrder[value]!);
+              },
+            ),
+            CommonDropButton<QuestionNumber>(
+                initialValue: QuestionNumber.TYPE1,
+                onChanged: (value) {
+                  print('Selected QuestionContent: $value');
+                },
+                items: questionnumberLabel)
+
             //一人に対してか否か
             //名前入力
             //一人を選択した場合には、一人文の名前入力テキストボックス
