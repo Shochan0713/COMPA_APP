@@ -16,7 +16,7 @@ class TransparentBorder extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.4),
+          color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.9),
           border: Border.all(
             color: borderColor,
             width: 2.0,

@@ -1,5 +1,4 @@
 //質問内容
-
 enum QuestionContent {
   private,
   work,
@@ -17,12 +16,6 @@ enum QuestionNumber {
   TYPE2,
   TYPE3,
   TYPE4,
-}
-
-// 人数
-enum MemberCount {
-  number1,
-  number2,
 }
 
 //質問内容
@@ -46,9 +39,4 @@ Map<QuestionNumber, String> questionnumberLabel = {
   QuestionNumber.TYPE2: "10",
   QuestionNumber.TYPE3: "15",
   QuestionNumber.TYPE4: "20",
-};
-
-Map<MemberCount, String> memberCount = {
-  MemberCount.number1: "1",
-  MemberCount.number2: "複数人",
 };

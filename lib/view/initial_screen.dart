@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:compa_app/view/selected_screen.dart';
-import 'package:compa_app/widget/back_ground_image_widget.dart';
+import 'package:compa_app/widgets/back_ground_image_widget.dart';
 import 'package:flutter/material.dart';
 
 class InitialScreen extends StatefulWidget {
