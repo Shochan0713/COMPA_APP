@@ -1,3 +1,4 @@
+import 'package:compa_app/Models/models.dart';
 import 'package:compa_app/helper/enum.dart';
 import 'package:compa_app/view/conversation_content_creating_result_screen.dart';
 import 'package:compa_app/widgets/back_ground_image_widget.dart';
@@ -20,6 +21,15 @@ class _ConversionContentCreatingScreenState
     extends State<ConversionContentCreatingScreen> {
   int selectedNumber = 1;
   List<Widget> nameInputFields = [NameInputField()];
+
+  late QuestionContentModel questionContent;
+
+  @override
+  void initState() {
+    super.initState();
+    questionContent = QuestionContentModel('質問内容');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +76,7 @@ class _ConversionContentCreatingScreenState
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) =>
-                                const ConversationConteneCreatinngResultScreen(),
+                                ConversationConteneCreatinngResultScreen(),
                           ),
                         );
                       }),

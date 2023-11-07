@@ -1,7 +1,10 @@
+import 'package:compa_app/Models/models.dart';
+import 'package:compa_app/providers/providers.dart';
 import 'package:compa_app/widgets/back_ground_image_widget.dart';
 import 'package:compa_app/widgets/custom_elevated_button.dart';
 import 'package:compa_app/widgets/transparent_border_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:riverpod/riverpod.dart';
 
 class ConversationConteneCreatinngResultScreen extends StatefulWidget {
   const ConversationConteneCreatinngResultScreen({super.key});
@@ -13,6 +16,23 @@ class ConversationConteneCreatinngResultScreen extends StatefulWidget {
 
 class _ConversationConteneCreatinngResultScreenState
     extends State<ConversationConteneCreatinngResultScreen> {
+  late QuestionContentModel question; // late修飾子を使用して遅延初期化
+  final container = ProviderContainer(); // ProviderContainerを作成
+
+  @override
+  void initState() {
+    super.initState();
+    question = container
+        .read(questionContentProvider)!
+        .state; // ProviderContainerを使用してread
+  }
+
+  @override
+  void dispose() {
+    container.dispose(); // 不要な場合はProviderContainerを破棄
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
