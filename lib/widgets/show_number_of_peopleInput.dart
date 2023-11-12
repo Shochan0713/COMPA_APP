@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 
 class NameInputForm extends StatefulWidget {
+  final Function(List<String> names) onNamesChanged;
+  NameInputForm({required this.onNamesChanged});
+
   @override
   _NameInputFormState createState() => _NameInputFormState();
 }
 
 class _NameInputFormState extends State<NameInputForm> {
-  bool isSinglePerson = true; // ラジオボタンで制御する、一人か複数人かのフラグ
-  int numberOfPeople = 1; // 複数人の場合の人数
+  bool isSinglePerson = true;
+  int numberOfPeople = 1;
 
-  List<Widget> nameInputFields = [NameInputField()]; // テキストボックスを保持するリスト
+  List<NameInputField> nameInputFields = [
+    NameInputField(
+      onNameChanged: (String) {},
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +39,11 @@ class _NameInputFormState extends State<NameInputForm> {
           onChanged: (value) {
             setState(() {
               isSinglePerson = value!;
-              // 複数人の場合、人数を入力するテキストボックスを表示
               showNumberOfPeopleInput();
             });
           },
         ),
-        ...nameInputFields, // 名前入力テキストボックスを表示
+        ...nameInputFields,
       ],
     );
   }
@@ -53,7 +59,6 @@ class _NameInputFormState extends State<NameInputForm> {
             onChanged: (value) {
               setState(() {
                 numberOfPeople = int.tryParse(value) ?? 0;
-                // 入力された人数に応じてテキストボックスを生成
                 generateNameInputFields();
               });
             },
@@ -74,17 +79,31 @@ class _NameInputFormState extends State<NameInputForm> {
   void generateNameInputFields() {
     nameInputFields.clear();
     for (int i = 0; i < numberOfPeople; i++) {
-      nameInputFields.add(NameInputField());
+      nameInputFields.add(NameInputField(
+        onNameChanged: (name) {
+          widget.onNamesChanged(
+              nameInputFields.map((field) => field.controller.text).toList());
+        },
+      ));
     }
     setState(() {});
   }
 }
 
 class NameInputField extends StatelessWidget {
+  final Function(String) onNameChanged;
+  final TextEditingController controller = TextEditingController();
+
+  NameInputField({required this.onNameChanged});
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       decoration: InputDecoration(labelText: '名前'),
+      onChanged: (name) {
+        onNameChanged(name);
+      },
     );
   }
 }

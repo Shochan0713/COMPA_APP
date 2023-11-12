@@ -20,9 +20,12 @@ class ConversionContentCreatingScreen extends StatefulWidget {
 class _ConversionContentCreatingScreenState
     extends State<ConversionContentCreatingScreen> {
   int selectedNumber = 1;
-  List<Widget> nameInputFields = [NameInputField()];
 
   late QuestionContentModel questionContent;
+  QuestionContent? selectedQuestionContent;
+  OutputOrder? selectedOutputOrder;
+  QuestionNumber? selectesQuestionNumber;
+  List<String> selectedNames = [];
 
   @override
   void initState() {
@@ -49,14 +52,20 @@ class _ConversionContentCreatingScreenState
                   ),
                   CommonDropButton<QuestionContent>(
                       initialValue: QuestionContent.private,
-                      onChanged: (value) {
-                        print('Selected QuestionContent: $value');
+                      onChanged: (selectedValue) {
+                        setState(() {
+                          selectedQuestionContent = selectedValue;
+                        });
+                        print('Selected QuestionContent: $selectedValue');
                       },
                       items: questionContentLabels),
                   CommonRadioButton<OutputOrder>(
                     selectedValue: OutputOrder.random,
-                    onValueChanged: (value) {
-                      print('Selected OutputOrder: $value');
+                    onValueChanged: (slecetValue) {
+                      setState(() {
+                        selectedOutputOrder = slecetValue;
+                      });
+                      print('Selected OutputOrder: $slecetValue');
                     },
                     items: OutputOrder.values,
                     itemBuilder: (value) {
@@ -65,18 +74,36 @@ class _ConversionContentCreatingScreenState
                   ),
                   CommonDropButton<QuestionNumber>(
                       initialValue: QuestionNumber.TYPE1,
-                      onChanged: (value) {
-                        print('Selected value: $value');
+                      onChanged: (selectValue) {
+                        setState(() {
+                          selectesQuestionNumber = selectValue;
+                        });
+                        print('Selected value: $selectValue');
                       },
                       items: questionnumberLabel),
-                  NameInputForm(),
+                  NameInputForm(
+                    onNamesChanged: (List<String> names) {
+                      setState(() {
+                        selectedNames = names;
+                      });
+                      print('Selected names; $names');
+                    },
+                  ),
                   CustomElevatedButton(
                       text: '質問へGO！！',
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) =>
-                                ConversationConteneCreatinngResultScreen(),
+                                ConversationConteneCreatinngResultScreen(
+                              questionContents:
+                                  selectedQuestionContent?.toString() ?? '',
+                              outPutOrder:
+                                  selectedOutputOrder?.toString() ?? '',
+                              questionNumber:
+                                  selectesQuestionNumber?.toString() ?? '',
+                              names: selectedNames,
+                            ),
                           ),
                         );
                       }),
