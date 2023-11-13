@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class NameInputForm extends StatefulWidget {
   final Function(List<String> names) onNamesChanged;
+
   NameInputForm({required this.onNamesChanged});
 
   @override
@@ -11,12 +12,7 @@ class NameInputForm extends StatefulWidget {
 class _NameInputFormState extends State<NameInputForm> {
   bool isSinglePerson = true;
   int numberOfPeople = 1;
-
-  List<NameInputField> nameInputFields = [
-    NameInputField(
-      onNameChanged: (String) {},
-    )
-  ];
+  List<NameInputField> nameInputFields = [];
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +44,8 @@ class _NameInputFormState extends State<NameInputForm> {
     );
   }
 
-  void showNumberOfPeopleInput() {
-    showDialog(
+  void showNumberOfPeopleInput() async {
+    int? result = await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -59,14 +55,13 @@ class _NameInputFormState extends State<NameInputForm> {
             onChanged: (value) {
               setState(() {
                 numberOfPeople = int.tryParse(value) ?? 0;
-                generateNameInputFields();
               });
             },
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(numberOfPeople);
               },
               child: Text('OK'),
             ),
@@ -74,17 +69,23 @@ class _NameInputFormState extends State<NameInputForm> {
         );
       },
     );
+
+    if (result != null) {
+      generateNameInputFields();
+    }
   }
 
   void generateNameInputFields() {
     nameInputFields.clear();
     for (int i = 0; i < numberOfPeople; i++) {
-      nameInputFields.add(NameInputField(
-        onNameChanged: (name) {
-          widget.onNamesChanged(
-              nameInputFields.map((field) => field.controller.text).toList());
-        },
-      ));
+      nameInputFields.add(
+        NameInputField(
+          onNameChanged: (name) {
+            widget.onNamesChanged(
+                nameInputFields.map((field) => field.controller.text).toList());
+          },
+        ),
+      );
     }
     setState(() {});
   }

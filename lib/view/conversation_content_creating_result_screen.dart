@@ -1,3 +1,7 @@
+import 'package:compa_app/Models/models.dart';
+import 'package:compa_app/helper/enum.dart';
+import 'package:compa_app/widgets/back_ground_image_widget.dart';
+import 'package:compa_app/widgets/transparent_border_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,6 +10,7 @@ class ConversationConteneCreatinngResultScreen extends ConsumerWidget {
   final String outPutOrder;
   final String questionNumber;
   final List<String> names;
+  final QuestionManager questionManager;
 
   const ConversationConteneCreatinngResultScreen({
     Key? key,
@@ -13,28 +18,40 @@ class ConversationConteneCreatinngResultScreen extends ConsumerWidget {
     required this.questionNumber,
     required this.outPutOrder,
     required this.names,
+    required this.questionManager,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 実際のウィジェット構築ロジックをここに記述
-    // refを使用して必要なプロバイダーからステートを取得
-    // 例: final someState = ref.read(someProvider);
+    print('questionContents: $questionContents');
+    print('outPutOrder: $outPutOrder');
+    print('questionNumber: $questionNumber');
+    print('names: $names');
+
+    List<QuestionModel> questions =
+        questionManager.getQuestions(QuestionContent.private);
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Result Screen'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Question Contents: $questionContents'),
-            Text('Output Order: $outPutOrder'),
-            Text('Question Number: $questionNumber'),
-            Text('Names: ${names.join(', ')}'),
-            // 必要に応じて他のウィジェットを追加
-          ],
+      body: BackgroundImage(
+        child: Center(
+          child: TransparentBorder(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                    'Question Contents: ${questions.map((q) => q.questionContents).join(', ')}'),
+                Text(
+                    'Output Order: ${questions.map((q) => q.outputOrder).join(', ')}'),
+                Text(
+                    'Question Number: ${questions.map((q) => q.questionNumber).join(', ')}'),
+                Text('Names: ${questions.expand((q) => q.names).join(', ')}'),
+                // 必要に応じて他のウィジェットを追加
+              ],
+            ),
+          ),
         ),
       ),
     );

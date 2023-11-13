@@ -20,17 +20,20 @@ class ConversionContentCreatingScreen extends StatefulWidget {
 class _ConversionContentCreatingScreenState
     extends State<ConversionContentCreatingScreen> {
   int selectedNumber = 1;
-
-  late QuestionContentModel questionContent;
-  QuestionContent? selectedQuestionContent;
-  OutputOrder? selectedOutputOrder;
-  QuestionNumber? selectesQuestionNumber;
+  late QuestionContent selectedQuestionContent;
+  late OutputOrder selectedOutputOrder;
+  late QuestionNumber selectesQuestionNumber;
   List<String> selectedNames = [];
+  late QuestionManager questionManager; // 追加
 
   @override
   void initState() {
     super.initState();
-    questionContent = QuestionContentModel('質問内容');
+    selectedQuestionContent = QuestionContent.private;
+    selectedOutputOrder = OutputOrder.random;
+    selectesQuestionNumber = QuestionNumber.TYPE1;
+    selectedNames = ["ユーザー１"];
+    questionManager = QuestionManager(selectedOutputOrder); // 追加
   }
 
   @override
@@ -64,6 +67,7 @@ class _ConversionContentCreatingScreenState
                     onValueChanged: (slecetValue) {
                       setState(() {
                         selectedOutputOrder = slecetValue;
+                        questionManager = QuestionManager(selectedOutputOrder);
                       });
                       print('Selected OutputOrder: $slecetValue');
                     },
@@ -86,27 +90,34 @@ class _ConversionContentCreatingScreenState
                       setState(() {
                         selectedNames = names;
                       });
-                      print('Selected names; $names');
+                      print('Selected names; $selectedNames');
                     },
                   ),
                   CustomElevatedButton(
-                      text: '質問へGO！！',
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ConversationConteneCreatinngResultScreen(
-                              questionContents:
-                                  selectedQuestionContent?.toString() ?? '',
-                              outPutOrder:
-                                  selectedOutputOrder?.toString() ?? '',
-                              questionNumber:
-                                  selectesQuestionNumber?.toString() ?? '',
-                              names: selectedNames,
-                            ),
+                    text: '質問へGO！！',
+                    onPressed: () {
+                      print(
+                          'selectedQuestionContent: $selectedQuestionContent');
+                      print('outPutOrder: $selectedOutputOrder');
+                      print('selectesQuestionNumber: $selectesQuestionNumber');
+                      print('selectedNames: $selectedNames');
+
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ConversationConteneCreatinngResultScreen(
+                            questionContents:
+                                selectedQuestionContent.toString(),
+                            outPutOrder: selectedOutputOrder.toString(),
+                            questionNumber: selectesQuestionNumber.toString(),
+                            names: selectedNames,
+                            questionManager: questionManager,
+                            key: UniqueKey(),
                           ),
-                        );
-                      }),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
