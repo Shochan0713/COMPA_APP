@@ -1,6 +1,7 @@
 import 'package:compa_app/Models/models.dart';
-import 'package:compa_app/helper/enum.dart';
+import 'package:compa_app/providers/providers.dart';
 import 'package:compa_app/widgets/back_ground_image_widget.dart';
+import 'package:compa_app/widgets/question_text_display.dart';
 import 'package:compa_app/widgets/transparent_border_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,14 +24,7 @@ class ConversationConteneCreatinngResultScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print('questionContents: $questionContents');
-    print('outPutOrder: $outPutOrder');
-    print('questionNumber: $questionNumber');
-    print('names: $names');
-
-    List<QuestionModel> questions =
-        questionManager.getQuestions(QuestionContent.private);
-
+    final questions = ref.watch(questionStateNottifierProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text('Result Screen'),
@@ -41,14 +35,34 @@ class ConversationConteneCreatinngResultScreen extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                QuestionTextDisplay(
+                  questionContents: questions.isNotEmpty
+                      ? questions.first.questionContents
+                      : '質問は以上です。',
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (questions.isNotEmpty) {
+                      ref
+                          .read(questionStateNottifierProvider.notifier)
+                          .updateQuestions(questions);
+                    }
+                  },
+                  child: Text('Next Question'),
+                ),
                 Text(
-                    'Question Contents: ${questions.map((q) => q.questionContents).join(', ')}'),
+                  'Question Contents: ${questions.map((q) => q.questionContents).join(', ')}',
+                ),
                 Text(
-                    'Output Order: ${questions.map((q) => q.outputOrder).join(', ')}'),
+                  'Output Order: ${questions.map((q) => q.outputOrder).join(', ')}',
+                ),
                 Text(
-                    'Question Number: ${questions.map((q) => q.questionNumber).join(', ')}'),
-                Text('Names: ${questions.expand((q) => q.names).join(', ')}'),
-                // 必要に応じて他のウィジェットを追加
+                  'Question Number: ${questions.map((q) => q.questionNumber).join(', ')}',
+                ),
+                Text(
+                  'Names: ${questions.expand((q) => q.names).join(', ')}',
+                ),
+                // 他のウィジェットを追加
               ],
             ),
           ),
