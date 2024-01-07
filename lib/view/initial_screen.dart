@@ -15,10 +15,10 @@ class _InitialScreenState extends State<InitialScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 5), () {
+    Timer(const Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => SelectScreen(),
+          builder: (context) => const SelectScreen(),
         ),
       );
     });
@@ -26,7 +26,7 @@ class _InitialScreenState extends State<InitialScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         body: BackgroundImage(
             child: Center(
       child: Text('初期画面'),

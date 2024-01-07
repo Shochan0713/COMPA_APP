@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, sort_child_properties_last
+
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {

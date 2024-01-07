@@ -8,7 +8,7 @@ class QuestionTextDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       questionContents,
-      style: TextStyle(fontSize: 18),
+      style: const TextStyle(fontSize: 18),
     );
   }
 }

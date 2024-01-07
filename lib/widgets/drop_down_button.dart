@@ -5,7 +5,7 @@ class CommonDropButton<T> extends StatefulWidget {
   final ValueChanged<T> onChanged;
   final Map<T, String> items;
 
-  CommonDropButton({
+  const CommonDropButton({
     Key? key,
     required this.initialValue,
     required this.onChanged,

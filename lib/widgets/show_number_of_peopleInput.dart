@@ -1,11 +1,14 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, file_names
+
 import 'package:flutter/material.dart';
 
 class NameInputForm extends StatefulWidget {
   final Function(List<String> names) onNamesChanged;
 
-  NameInputForm({required this.onNamesChanged});
+  NameInputForm({super.key, required this.onNamesChanged});
 
   @override
+  // ignore: library_private_types_in_public_api
   _NameInputFormState createState() => _NameInputFormState();
 }
 
@@ -19,7 +22,7 @@ class _NameInputFormState extends State<NameInputForm> {
     return Column(
       children: <Widget>[
         RadioListTile(
-          title: Text('一人'),
+          title: const Text('一人'),
           value: true,
           groupValue: isSinglePerson,
           onChanged: (value) {
@@ -29,7 +32,7 @@ class _NameInputFormState extends State<NameInputForm> {
           },
         ),
         RadioListTile(
-          title: Text('複数人'),
+          title: const Text('複数人'),
           value: false,
           groupValue: isSinglePerson,
           onChanged: (value) {
@@ -49,7 +52,7 @@ class _NameInputFormState extends State<NameInputForm> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('複数人の人数を入力してください'),
+          title: const Text('複数人の人数を入力してください'),
           content: TextField(
             keyboardType: TextInputType.number,
             onChanged: (value) {
@@ -63,7 +66,7 @@ class _NameInputFormState extends State<NameInputForm> {
               onPressed: () {
                 Navigator.of(context).pop(numberOfPeople);
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -95,13 +98,13 @@ class NameInputField extends StatelessWidget {
   final Function(String) onNameChanged;
   final TextEditingController controller = TextEditingController();
 
-  NameInputField({required this.onNameChanged});
+  NameInputField({super.key, required this.onNameChanged});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      decoration: InputDecoration(labelText: '名前'),
+      decoration: const InputDecoration(labelText: '名前'),
       onChanged: (name) {
         onNameChanged(name);
       },

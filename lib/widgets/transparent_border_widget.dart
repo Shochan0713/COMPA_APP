@@ -4,7 +4,7 @@ class TransparentBorder extends StatelessWidget {
   final Widget child;
   final Color borderColor;
 
-  TransparentBorder(
+  const TransparentBorder(
       {Key? key, required this.child, this.borderColor = Colors.black})
       : super(key: key);
 
@@ -12,11 +12,11 @@ class TransparentBorder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        margin: EdgeInsets.all(23.0),
+        margin: const EdgeInsets.all(23.0),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.9),
+          color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.9),
           border: Border.all(
             color: borderColor,
             width: 2.0,

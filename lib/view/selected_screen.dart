@@ -1,4 +1,4 @@
-import 'package:compa_app/view/conversation_content_creating_screen.dart';
+import 'package:compa_app/view/conversation_content/question_creating_screen.dart';
 import 'package:compa_app/view/setting_screen_change_seat.dart';
 import 'package:compa_app/widgets/back_ground_image_widget.dart';
 import 'package:compa_app/widgets/custom_elevated_button.dart';
