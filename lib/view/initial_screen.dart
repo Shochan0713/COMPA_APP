@@ -26,10 +26,10 @@ class _InitialScreenState extends State<InitialScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
         body: BackgroundImage(
             child: Center(
-      child: Text('初期画面'),
+      child: Image.asset("assets/images/logo.png"),
     )));
   }
 }

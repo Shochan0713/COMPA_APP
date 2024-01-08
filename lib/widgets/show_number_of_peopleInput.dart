@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class NameInputForm extends StatefulWidget {
   final Function(List<String> names) onNamesChanged;
@@ -54,7 +55,12 @@ class _NameInputFormState extends State<NameInputForm> {
         return AlertDialog(
           title: const Text('複数人の人数を入力してください'),
           content: TextField(
+            maxLength: 2,
             keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              // LengthLimitingTextInputFormatter(2),
+            ],
             onChanged: (value) {
               setState(() {
                 numberOfPeople = int.tryParse(value) ?? 0;
@@ -104,6 +110,7 @@ class NameInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      keyboardType: TextInputType.number,
       decoration: const InputDecoration(labelText: '名前'),
       onChanged: (name) {
         onNameChanged(name);
